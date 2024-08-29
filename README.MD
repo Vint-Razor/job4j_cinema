@@ -8,8 +8,12 @@
 Техническое задание<br>
 
 Для реализации нужно использовать:<br>
--Spring Boot,
--Thymeleaf, Bootstrap, Liquibase, Sql2o, PostgreSQL (зависимости аналогичны проекту job4j_dreamjob).
+-Spring Boot,<br>
+-Thymeleaf,<br>
+-Bootstrap,<br>
+-Liquibase,<br>
+-Sql2o,<br>
+PostgreSQL (зависимости аналогичны проекту job4j_dreamjob).
 
 Представления:
 
@@ -32,70 +36,7 @@
 
 Все пользователи имеют право просматривать информацию на сайте;
 Только зарегистрированные пользователю могут покупать билеты. Если пользователь не зарегистрирован и нажимает на кнопку "Купить билет", то его перебрасывает на страницу входа.
-Схема БД:
-```postgres-sql
-create table files
-(
-id   serial primary key,
-name varchar not null,
-path varchar not null unique
-);
 
-create table genres
-(
-id   serial primary key,
-name varchar unique not null
-);
-
-create table films
-(
-id                  serial primary key,
-name                varchar                    not null,
-description         varchar                    not null,
-"year"              int                        not null,
-genre_id            int references genres (id) not null,
-minimal_age         int                        not null,
-duration_in_minutes int                        not null,
-file_id             int references files (id)  not null
-);
-
-create table halls
-(
-id          serial primary key,
-name        varchar not null,
-row_count   int     not null,
-place_count int     not null,
-description varchar not null
-);
-
-create table film_sessions
-(
-id         serial primary key,
-film_id    int references films (id) not null,
-halls_id   int references halls (id) not null,
-start_time timestamp                 not null,
-end_time   timestamp                 not null,
-price      int                       not null
-);
-
-create table users
-(
-id        serial primary key,
-full_name varchar        not null,
-email     varchar unique not null,
-password  varchar        not null
-);
-
-create table tickets
-(
-id           serial primary key,
-session_id   int references film_sessions (id) not null,
-row_number   int                               not null,
-place_number int                               not null,
-user_id      int                               not null,
-unique (session_id, row_number, place_number)
-);
-```
 >[!note]Нюансы:
 Все таблицы кроме таблицы tickets и users заполняются с помощью скриптов SQL. Подобные данные заполняются администратором, а по заданию панель администратора нам писать НЕ нужно;
 Таблица users имеет ограничение уникальности для email, поэтому при создании пользователя нужно возвращать Optional<User>;
@@ -146,5 +87,3 @@ public class FilmDto {
 11. Реализовать фильтры;
 
 12. Реализовать Unit тесты для всех слоев приложения;
-
-13. Оставить ссылку на последний коммит и перевести ответственного на одного из менторов. 
