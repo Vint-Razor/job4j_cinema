@@ -22,13 +22,15 @@
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Имя</th>
+                <th scope="col">Начало</th>
+                <th scope="col">Название</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="film: ${films}">
-                <td th:text="${film.id}"/>
-                <td th:text="${film.name}"/>
+            <tr th:each="session: ${sessions}">
+                <td th:text="${session.id}"/>
+                <td th:text="${session.startTime}"/>
+                <td th:text="${session.name}"/>
             </tr>
             </tbody>
         </table>
